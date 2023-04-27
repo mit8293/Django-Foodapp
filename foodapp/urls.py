@@ -26,5 +26,17 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name="home"),
+    path('recipes/', views.recipes, name='recipes'),
+    path('recipes/veg/', views.veg, name='veg'),
+    path('recipes/nonveg/', views.nonveg, name='nonveg'),
+    path('recipes/healthy/', views.healthy, name='healthy'),
+    path('search/', views.search, name='search'),
+    path('add_comment/<int:bid>', views.add_comment, name='add_comment'),
+
+
+
+    path('singleblog/<int:pk>', views.singleblog, name='singleblog'),
+    path('accounts/', include('accounts.urls')),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

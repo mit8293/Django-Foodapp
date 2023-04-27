@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %} 
+
+{% block content %}
+<section class="signin-page account">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="block text-center">
+            {% comment %} <a class="logo" href="index.html">
+              <img src="images/logo.png" alt="">
+            </a> {% endcomment %}
+            
+            <h2 class="text-center">Create Your Account</h2>
+            {% include 'includes/alerts.html' %}
+            <form class="text-left clearfix" method='POST' action="{% url 'register' %}">
+              {% csrf_token %}
+              
+              
+                {% comment %} {{form.as_p}} {% endcomment %}
+              <div class="form-group" style="width: -webkit-fill-available;">
+                {% comment %} <input type="text" class="form-control"  placeholder="First Name"> {% endcomment %}
+                {{ form.first_name }}
+              </div>
+              <div class="form-group">
+                {% comment %} <input type="text" class="form-control"  placeholder="Last Name"> {% endcomment %}
+                {{ form.last_name }}
+              </div>
+              <div class="form-group">
+                {% comment %} <input type="text" class="form-control"  placeholder="Username"> {% endcomment %}
+              </div>
+              <div class="form-group">
+                {% comment %} <input type="tel" class="form-control"  placeholder="Phone Number"> {% endcomment %}
+                {{ form.phone_number }}
+              </div>
+              <div class="form-group">
+                {% comment %} <input type="email" class="form-control"  placeholder="Email"> {% endcomment %}
+                {{ form.email }}
+                {{ form.email.errors }}
+                
+              </div>
+              <div class="form-group">
+                {% comment %} <input type="password" class="form-control"  placeholder="Password"> {% endcomment %}
+                {{ form.password }}
+                {{ form.non_field_errors }}
+              </div>
+              
+              <div class="form-group">
+                {% comment %} <input type="password" class="form-control"  placeholder="Re-enter Password"> {% endcomment %}
+                {{ form.confirm_password }}
+                <small class="form-text text-muted">We'll never share your details with anyone. </small>
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-main text-center">Create Account</button>
+              </div>
+              
+            </form>
+            <p class="mt-20">Already hava an account ?<a href="{% url 'login' %}"> Login</a></p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}

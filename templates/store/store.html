@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="page-wrapper">
+	<div class="container">
+		<div class="row">
+      		<div class="col-md-4">
+				<aside class="sidebar">
+
+	
+
+	<!-- Widget Latest Posts -->
+	<div class="widget widget-latest-post">
+		<h4 class="widget-title">Latest Recipies</h4>
+		{% for latest_blog in latest_blogs %}
+		<div class="media">
+			<a class="pull-left" href="/singleblog/{{latest_blog.id}}">
+				<img class="media-object" src="{{latest_blog.pic.url}}" alt="Image">
+			</a>
+			<div class="media-body">
+				<h4 class="media-heading"><a href="/singleblog/{{latest_blog.id}}">{{latest_blog.title}}</a></h4>
+				<p>{{latest_blog.description|slice:":70"}}...</p>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	<!-- End Latest Posts -->
+
+	<!-- Widget Category -->
+	<div class="widget widget-category" id="categories">
+		<h4 class="widget-title">Categories</h4>
+		<ul class="widget-category-list">
+			<li><a href="/recipes/">All Recipes</a>
+	        </li>
+			
+	        <li><a href="{% url 'veg' %}">Vegetarian</a>
+			<li><a href="{% url 'nonveg' %}">Non-Vegetarian</a>
+			<li><a href="{% url 'healthy' %}">Healthy</a></li>
+
+	        </li>
+			
+	    </ul>
+	</div> <!-- End category  -->
+
+	{% comment %} <!-- Widget tag -->
+	<div class="widget widget-tag">
+		<h4 class="widget-title">Tag Cloud</h4>
+		<ul class="widget-tag-list">
+	        <li><a href="#!">Animals</a>
+	        </li>
+	        <li><a href="#!">Landscape</a>
+	        </li>
+	        <li><a href="#!">Portrait</a>
+	        </li>
+	        <li><a href="#!">Wild Life</a>
+	        </li>
+	        <li><a href="#!">Video</a>
+	        </li>
+	    </ul>
+	</div> <!-- End tag  --> {% endcomment %}
+
+	
+
+
+
+
+
+</aside>
+</div>
+<div class="col-md-8">
+	{% for i in blogs %}
+<div class="post">
+	<div class="post-media post-thumb">
+		<a href="/singleblog/{{i.id}}">
+			<img src="{{ i.pic.url }}" alt="">
+		</a>
+	</div>
+	<h2 class="post-title"><a href="/singleblog/{{i.id}}">{{ i.title }}</a></h2>
+	<div class="post-meta">
+		<ul>
+			<li>
+				<i class="tf-ion-ios-calendar"></i> {{ i.time }}
+			</li>
+			<li>
+				<i class="tf-ion-android-person"></i> {{ i.user.first_name }}
+			</li>
+			<li>
+				<a href="#!"><i class="tf-ion-ios-pricetags"></i> {{ i.categories }}</a>
+			</li>
+			<li>
+				<a href="#!"><i class="tf-ion-chatbubbles"></i> 4 COMMENTS</a>
+			</li>
+		</ul>
+	</div>
+	<div class="post-content">
+		<p>{{ i.description|linebreaks }}</p>
+		<a href="/singleblog/{{i.id}}" class="btn btn-main">Continue Reading</a>
+	</div>
+
+</div>{% endfor %}
+
+<div class="text-center">
+	{% if blogs.has_other_pages %}
+
+	<ul class="pagination post-pagination">
+		{% if blogs.has_previous %}
+		<li><a href="?page={{ blogs.previous_page_number }}">Prev</a>
+		</li>
+		{% else %}
+		<li class="disabled"><a href="#">Prev</a>
+		</li>
+		{% endif %}
+		{% for i in blogs.paginator.page_range %}
+			{% if blogs.number == i %}
+			<li class="active"><a href="#">{{i}}</a>
+			</li>
+			{% else %}
+			<li><a href="?page={{i}}">{{i}}</a>
+			</li>
+			{% endif %}
+			{% endfor %}
+			
+			{% if blogs.has_next %}
+			</li>
+			<li><a href="?page={{ blogs.next_page_number }}">Next</a>
+			</li>
+			{% else %}
+			</li>
+			<li class="disabled"><a href="#">Next</a>
+			</li>
+			{% endif %}
+	</ul>
+			{% endif %}
+</div>
+      		</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

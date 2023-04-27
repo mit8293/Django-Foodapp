@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="page-wrapper">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="post post-single">
+					<div class="post-thumb">
+						<img class="img-responsive" src="{{ blog.pic.url }}" alt="">
+					</div>
+					<h2 class="post-title">{{ blog.title }}</h2>
+					<div class="post-meta">
+						<ul>
+							<li>
+								<i class="tf-ion-ios-calendar"></i> {{ blog.time }}
+							</li>
+							<li>
+								<i class="tf-ion-android-person"></i> {{ blog.user.first_name }}
+							</li>
+							<li>
+								<a href="#!"><i class="tf-ion-ios-pricetags"></i> {{ blog.categories }}</a>
+							</li>
+							<li>
+								<a href="#!"><i class="tf-ion-chatbubbles"></i> 4 COMMENTS</a>
+							</li>
+						</ul>
+					</div>
+					<div class="post-content post-excerpt">
+						<p>{{ blog.description }}</p>
+						<blockquote class="quote-post">
+				            <p>
+                                <h1>Ingredients</h1>
+				                {{ blog.ingredients|linebreaks }}
+				            </p>
+				        </blockquote>
+				        <pre>
+                            <h2>Procedure</h2>
+                            <br>
+                            {{ blog.procedure|linebreaks }}
+                            <br>
+						</pre>
+						<p></p>
+				    </div>
+				   
+				    <div class="post-comments">
+				    	<h3 class="post-sub-heading">{{ count }} Comments</h3>
+				    	<ul class="media-list comments-list m-bot-50 clearlist">
+						    <!-- Comment Item start-->
+                            {% for j in all_comments %}
+						    <li class="media">
+
+						        <a class="pull-left" href="#!">
+						            <img class="media-object comment-avatar" src="{{j.user.dp.url}}" alt="" width="50" height="50">
+						        </a>
+
+						        <div class="media-body">
+
+						            <div class="comment-info">
+						                <div class="comment-author">
+						                    <a href="#!">{{j.user.first_name}}</a>
+						                </div>
+						                <time>{{j.time}}</time>
+						                {% comment %} <a class="comment-button" href="#!"><i class="tf-ion-chatbubbles"></i>Reply</a> {% endcomment %}
+						            </div>
+
+						            <p>
+						                {{j.message}}
+						            </p>
+
+						        </div>
+
+						    </li>
+                            {% endfor %}
+						    <!-- End Comment Item -->
+
+						</ul>
+				    </div>
+
+				    <div class="post-comments-form">
+				    	<h3 class="post-sub-heading">Leave You Comments</h3>
+				    	<form method="post" action="/add_comment/{{blog.id}}" id="form" role="form" >
+                            {% csrf_token %}
+
+				            <div class="row">
+
+				                <!-- Comment -->
+				                <div class="form-group col-md-12">
+				                    <textarea name="troll" id="text" class=" form-control" rows="6" placeholder="Comment" maxlength="400"></textarea>
+				                </div>
+
+				                <!-- Send Button -->
+				                <div class="form-group col-md-12">
+				                    <button type="submit" class="btn btn-small btn-main ">
+				                        Send comment
+				                    </button>
+				                </div>
+
+
+				            </div>
+
+				        </form>
+				    </div>
+
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock content %}
