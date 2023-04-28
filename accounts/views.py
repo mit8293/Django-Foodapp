@@ -118,6 +118,73 @@ def dashboard(request):
     return render(request, 'accounts/dashboard.html', context)
 
 
+@login_required(login_url='login')
+def add_blog(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            user_obj = request.user
+            print(user_obj)
+            return render(request, 'accounts/add_blog.html', {'userdata': user_obj})
+
+    else:
+        if request.user.is_authenticated:
+            user_obj = request.user
+
+        Blog.objects.create(
+            title=request.POST['title'],
+            description=request.POST['des'],
+            ingredients=request.POST['ingredients'],
+            procedure=request.POST['procedure'],
+            categories=request.POST['cate'],
+            pic=request.FILES['foto'],
+            # user ek foreign key field hai, isiliye obj dena hai
+            user=user_obj
+            # ye object jiska session chalu hai uska hai
+        )
+        messages.success(request, 'Congrats! Your Recipe has been uploaded.')
+        return redirect('dashboard')
+
+
+@login_required(login_url='login')
+def edit_blog(request, bid):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            user_obj = request.user
+            blog_obj = Blog.objects.get(id=bid)
+            print(blog_obj)
+            print(user_obj)
+            return render(request, 'accounts/edit_blog.html', {'userdata': user_obj, 'blog': blog_obj})
+
+    else:
+        user_obj = request.user
+        blog_obj = Blog.objects.get(id=bid)
+        if blog_obj.user == user_obj:
+            print("done")
+            blog_obj.title = request.POST['title']
+            blog_obj.description = request.POST['des']
+            blog_obj.ingredients = request.POST['ingredients']
+            blog_obj.procedure = request.POST['procedure']
+            blog_obj.categories = request.POST['cate']
+            blog_obj.save()
+            messages.success(request, 'Your Recipe has been edited.')
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Bhag CHutya')
+            return redirect('dashboard')
+
+
+@login_required(login_url='login')
+def delete_blog(request, bid):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            user_obj = request.user
+            blog_obj = Blog.objects.get(id=bid)
+            if blog_obj.user == user_obj:
+                blog_obj.delete()
+                messages.success(request, 'Your Recipe has been deleted.')
+                return redirect('dashboard')
+
+
 def forgotPassword(request):
     if request.method == "POST":
         email = request.POST['Email']

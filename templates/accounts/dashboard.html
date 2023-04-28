@@ -4,32 +4,15 @@
 {% block content %}
 {% include 'includes/alerts.html' %}
 
-<section class="page-header">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="content">
-					<h1 class="page-name">Dashboard</h1>
-					<ol class="breadcrumb">
-						<li><a href="index.html">Home</a></li>
-						<li class="active">my account</li>
-					</ol>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-
-
 <section class="user-dashboard page-wrapper">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
 				<ul class="list-inline dashboard-menu text-center">
-					<li><a class="active" href="dashboard.html">Dashboard</a></li>
+					<li><a class="active" href="#">Dashboard</a></li>
 					{% comment %} <li><a href="order.html">Orders</a></li>
 					<li><a href="address.html">Address</a></li> {% endcomment %}
-					<li><a href="profile-details.html">Add New Recipe</a></li>
+					<li><a href="{% url 'add_blog' %}">Add New Recipe</a></li>
 				</ul>
 				<div class="dashboard-wrapper user-dashboard">
 					<div class="media">
@@ -44,7 +27,7 @@
 						</div>
 					</div>
 					<div class="total-order mt-20">
-						<h4>My Recepies</h4>
+						<h2>My Recepies</h2>
 						<div class="table-responsive">
 							<table class="table">
 								<thead>
@@ -59,11 +42,12 @@
 								<tbody>
 									{% for i in my_filtered_blogs %}
 									<tr>
-										<td><a href="#!">{{i.title}}</a></td>
+										<td><a href="/singleblog/{{i.id}}">{{i.title}}</a></td>
 										<td>{{i.time}}</td>
 										<td>{{i.categories}}</td>
-										<td><button>Edit</button>
-										<button>Delete</button>
+										<td>
+											<a class="btn " href="{% url 'edit_blog' bid=i.id %}">Edit</a> 
+											<a class="btn btn-small" href="{% url 'delete_blog' bid=i.id %}">Delete</a>
 										</td>
 									</tr>
 									{% endfor %}

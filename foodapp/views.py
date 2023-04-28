@@ -77,7 +77,7 @@ def search(request):
     return render(request, 'store/store.html', context)
 
 
-# @login_required(login_url='login')
+@login_required(login_url='login')
 def add_comment(request, bid):
     try:
         if request.user.is_authenticated:

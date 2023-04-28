@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %} 
+
+{% block content %}
+<section class="signin-page account">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-md-offset-0">
+          <div class="block text-center">
+            {% comment %} <a class="logo" href="index.html">
+              <img src="images/logo.png" alt="">
+            </a> {% endcomment %}
+            
+            <h2 class="text-center">Create Your Recipe</h2>
+            {% include 'includes/alerts.html' %}
+            <form class="text-left clearfix" method='POST' enctype="multipart/form-data" action="{% url 'add_blog' %}">
+              {% csrf_token %}
+              
+              
+                {% comment %} {{form.as_p}} {% endcomment %}
+              <div class="form-group" style="width: -webkit-fill-available;">
+                <input type="text" name='title' class="form-control"  placeholder="Title" required>
+              </div>
+              <div class="form-group">
+                <span>Select Category:</span>
+                <select name='cate' type="text" class="form-control"  placeholder="Select Category" required>
+                    <option value="none" selected disabled hidden>Select Category</option>
+                    <option value="veg">Veg</option>
+                    <option value="nonveg">NonVeg</option>
+                    <option value="healthy">Healthy</option>
+                </select>   
+              </div>
+              <div class="form-group">
+                <textarea name="des" class="form-control"  placeholder="Description" required></textarea >
+              </div>
+              <div class="form-group">
+                <textarea name="ingredients" class="form-control"  placeholder="Ingredients" required></textarea>
+              </div>
+              <div class="form-group">
+                <textarea name="procedure" class="form-control"  placeholder="Procedure" required></textarea>
+              </div>
+              <div class="form-group">
+                <label for="photo">Upload Photo: </label>
+                <input type="file" name="foto" class="form-control" accept=".jpg" placeholder="Photo" required>
+              </div>
+              <small class="form-text text-muted">Only Jpg</small>
+              <div class="text-center">
+                <button type="submit" class="btn btn-main text-center">Add Recipe</button>
+              </div>
+              
+            </form>
+            
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}

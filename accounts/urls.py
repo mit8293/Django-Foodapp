@@ -7,6 +7,11 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('', views.dashboard, name='dashboard'),
+    path('add_blog/', views.add_blog, name='add_blog'),
+    path('edit_blog/<int:bid>', views.edit_blog, name='edit_blog'),
+    path('delete_blog/<int:bid>', views.delete_blog, name='delete_blog'),
+
+
 
 
     path('activate/<uidb64>/<token>', views.activate, name='activate'),
