@@ -137,3 +137,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
+
+# smpt config
